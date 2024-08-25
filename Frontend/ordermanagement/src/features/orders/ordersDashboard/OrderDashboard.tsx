@@ -1,28 +1,28 @@
 import React from "react";
-import { Customer, useGetCustomersQuery } from "../../../graphql/schema";
+import { Order, useGetOrdersQuery } from "../../../graphql/schema";
 import { Grid, Typography } from "@mui/material";
-import CustomerList from "./CustomerList";
+import OrderList from "./OrderList";
 
-export default function CustomersDashboard() {
-    const {data:customerData, loading, error} = useGetCustomersQuery();
+export default function OrderDashboard() {
+    const {data:ordersData, loading, error} = useGetOrdersQuery();
 
     if (loading) {
         return <div>Loading...</div>
     }
 
-    if (error || !customerData) {
+    if (error || !ordersData) {
         return <div>Error!!!</div>
     }
-    const customers = customerData.customers as Customer[]
+    const orders = ordersData.orders as Order[]
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography component='div' variant="h5" display='block' gutterBottom align='center'>
-                    Customers List
+                    Orders List
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <CustomerList customers={customers} />
+                <OrderList orders={orders} />
             </Grid>
         </Grid>
     )
