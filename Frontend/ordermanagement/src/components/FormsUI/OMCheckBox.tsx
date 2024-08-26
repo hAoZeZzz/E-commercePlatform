@@ -36,9 +36,8 @@ export default function OMCheckBox({name, label, legend, otherProps}: OMCheckBox
             <FormLabel component='legend'>{legend}</FormLabel>
             <FormGroup>
                 <FormControlLabel
-                    control={<Checkbox {...configCheckBox}
-                        label={label} />} label={undefined}>
-                </FormControlLabel>
+                    control={<Checkbox {...configCheckBox}/>} 
+                    label={label} />
             </FormGroup>
         </FormControl>
     )
