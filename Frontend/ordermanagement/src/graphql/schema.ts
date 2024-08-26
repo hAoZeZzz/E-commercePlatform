@@ -198,10 +198,24 @@ export type StringOperationFilterInput = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
+export type GetCustomersByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetCustomersByIdQuery = { __typename?: 'Query', customers: Array<{ __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null, contactNumber?: string | null, email?: string | null, address?: { __typename?: 'Address', addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, country?: string | null } | null, orders?: Array<{ __typename?: 'Order', id: number, orderDate: any, description?: string | null, totalAmount: any, isDelivery: boolean, status: Status, otherNotes?: string | null } | null> | null }> };
+
 export type GetCustomersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCustomersQuery = { __typename?: 'Query', customers: Array<{ __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null, contactNumber?: string | null, email?: string | null, address?: { __typename?: 'Address', addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, country?: string | null } | null, orders?: Array<{ __typename?: 'Order', id: number, orderDate: any, description?: string | null, totalAmount: any, isDelivery: boolean, status: Status, otherNotes?: string | null } | null> | null }> };
+
+export type GetOrdersByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetOrdersByIdQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: number, orderDate: any, description?: string | null, totalAmount: any, depositAmount: any, isDelivery: boolean, status: Status, otherNotes?: string | null, customer?: { __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null, contactNumber?: string | null, email?: string | null } | null }> };
 
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -209,6 +223,61 @@ export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetOrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: number, orderDate: any, description?: string | null, totalAmount: any, depositAmount: any, isDelivery: boolean, status: Status, otherNotes?: string | null, customer?: { __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null, contactNumber?: string | null, email?: string | null } | null }> };
 
 
+export const GetCustomersByIdDocument = gql`
+    query GetCustomersById($id: Int!) {
+  customers(where: {id: {eq: $id}}) {
+    id
+    firstName
+    lastName
+    contactNumber
+    email
+    address {
+      addressLine1
+      addressLine2
+      city
+      state
+      country
+    }
+    orders {
+      id
+      orderDate
+      description
+      totalAmount
+      isDelivery
+      status
+      otherNotes
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCustomersByIdQuery__
+ *
+ * To run a query within a React component, call `useGetCustomersByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomersByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomersByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCustomersByIdQuery(baseOptions: Apollo.QueryHookOptions<GetCustomersByIdQuery, GetCustomersByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCustomersByIdQuery, GetCustomersByIdQueryVariables>(GetCustomersByIdDocument, options);
+      }
+export function useGetCustomersByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCustomersByIdQuery, GetCustomersByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCustomersByIdQuery, GetCustomersByIdQueryVariables>(GetCustomersByIdDocument, options);
+        }
+export type GetCustomersByIdQueryHookResult = ReturnType<typeof useGetCustomersByIdQuery>;
+export type GetCustomersByIdLazyQueryHookResult = ReturnType<typeof useGetCustomersByIdLazyQuery>;
+export type GetCustomersByIdQueryResult = Apollo.QueryResult<GetCustomersByIdQuery, GetCustomersByIdQueryVariables>;
 export const GetCustomersDocument = gql`
     query GetCustomers {
   customers {
@@ -263,6 +332,55 @@ export function useGetCustomersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetCustomersQueryHookResult = ReturnType<typeof useGetCustomersQuery>;
 export type GetCustomersLazyQueryHookResult = ReturnType<typeof useGetCustomersLazyQuery>;
 export type GetCustomersQueryResult = Apollo.QueryResult<GetCustomersQuery, GetCustomersQueryVariables>;
+export const GetOrdersByIdDocument = gql`
+    query GetOrdersById($id: Int!) {
+  orders(where: {id: {eq: $id}}) {
+    id
+    orderDate
+    description
+    totalAmount
+    depositAmount
+    isDelivery
+    status
+    otherNotes
+    customer {
+      id
+      firstName
+      lastName
+      contactNumber
+      email
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrdersByIdQuery__
+ *
+ * To run a query within a React component, call `useGetOrdersByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrdersByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOrdersByIdQuery(baseOptions: Apollo.QueryHookOptions<GetOrdersByIdQuery, GetOrdersByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrdersByIdQuery, GetOrdersByIdQueryVariables>(GetOrdersByIdDocument, options);
+      }
+export function useGetOrdersByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrdersByIdQuery, GetOrdersByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrdersByIdQuery, GetOrdersByIdQueryVariables>(GetOrdersByIdDocument, options);
+        }
+export type GetOrdersByIdQueryHookResult = ReturnType<typeof useGetOrdersByIdQuery>;
+export type GetOrdersByIdLazyQueryHookResult = ReturnType<typeof useGetOrdersByIdLazyQuery>;
+export type GetOrdersByIdQueryResult = Apollo.QueryResult<GetOrdersByIdQuery, GetOrdersByIdQueryVariables>;
 export const GetOrdersDocument = gql`
     query GetOrders {
   orders {
