@@ -203,7 +203,7 @@ export type GetCustomersByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetCustomersByIdQuery = { __typename?: 'Query', customers: Array<{ __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null, contactNumber?: string | null, email?: string | null, address?: { __typename?: 'Address', addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, country?: string | null } | null, orders?: Array<{ __typename?: 'Order', id: number, orderDate: any, description?: string | null, totalAmount: any, isDelivery: boolean, status: Status, otherNotes?: string | null } | null> | null }> };
+export type GetCustomersByIdQuery = { __typename?: 'Query', customers: Array<{ __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null, contactNumber?: string | null, email?: string | null, address?: { __typename?: 'Address', addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, country?: string | null } | null, orders?: Array<{ __typename?: 'Order', id: number, orderDate: any, description?: string | null, totalAmount: any, isDelivery: boolean, status: Status, otherNotes?: string | null, customer?: { __typename?: 'Customer', id: number, firstName?: string | null, lastName?: string | null } | null } | null> | null }> };
 
 export type GetCustomersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -246,6 +246,11 @@ export const GetCustomersByIdDocument = gql`
       isDelivery
       status
       otherNotes
+      customer {
+        id
+        firstName
+        lastName
+      }
     }
   }
 }

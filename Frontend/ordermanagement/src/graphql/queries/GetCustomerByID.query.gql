@@ -20,6 +20,11 @@ query GetCustomersById($id: Int!) {
       isDelivery
       status
       otherNotes
+      customer {
+        id
+        firstName
+        lastName
+      }
     }
   }
 }
