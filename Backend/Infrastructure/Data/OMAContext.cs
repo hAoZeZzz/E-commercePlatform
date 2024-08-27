@@ -72,7 +72,7 @@ namespace Infrastructure.Data
                     TotalAmount = 500,
                     DepositAmount = 10,
                     IsDelivery = true,
-                    Status = Status.Pending,
+                    Status = Status.PENDING,
                     OtherNotes = "Something",
                     IsDeleted = false
                 },
@@ -85,7 +85,7 @@ namespace Infrastructure.Data
                     TotalAmount = 450,
                     DepositAmount = 20,
                     IsDelivery = true,
-                    Status = Status.Draft,
+                    Status = Status.DRAFT,
                     OtherNotes = "Something Old",
                     IsDeleted = false
                 }

@@ -35,7 +35,7 @@ export default function OrderPage() {
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <OMHeader header="Order Details" />
+                    <OMHeader header={`Order Details of ${customer.firstName} ${customer.lastName}`} />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>

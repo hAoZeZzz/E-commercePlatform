@@ -20,21 +20,19 @@ export default function NavBar() {
                             textDecoration: "none"
                         }}
                     >
-                        <Link to="/">Order Management App</Link>
+                        <Link className="text-link" to="/">OrderManagement App</Link>
                     </Typography>
                     <Box sx={{flexGrow: 1, display: { xs: 'none', md: 'flex'}}}>
                         <Button
                             key="Customers"
-                            sx={{ my: 2, color:'while', display: 'block'}}>
-                                <Link to="/customers">Customers</Link>
-                            </Button>
-                    </Box>
-                    <Box sx={{flexGrow: 1, display: { xs: 'none', md: 'flex'}}}>
+                            sx={{ my: 2, color:'white', display: 'block'}}>
+                                <Link className="text-link" to="/customers">Customers</Link>
+                        </Button>
                         <Button
                             key="Orders"
-                            sx={{ my: 2, color:'while', display: 'block'}}>
-                                <Link to="/orders">Orders</Link>
-                            </Button>
+                            sx={{ my: 2, color:'white', display: 'block'}}>
+                                <Link className="text-link" to="/orders">Orders</Link>
+                        </Button>
                     </Box>
                 </Toolbar>
             </Container>

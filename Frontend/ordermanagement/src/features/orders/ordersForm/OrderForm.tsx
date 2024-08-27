@@ -11,6 +11,7 @@ import OMDatePicker from "../../../components/FormsUI/OMDatePicker";
 import OMTextField from "../../../components/FormsUI/OMTextField";
 import OMCheckBox from "../../../components/FormsUI/OMCheckBox";
 import OMSubmitButton from "../../../components/FormsUI/OMSubmitButton";
+import statuses from "../../../data/statuses.json";
 
 interface OrderFromProps {
     order: Order,
@@ -23,6 +24,8 @@ const FORM_VALIDATION = yup.object().shape({
     // email: yup.string().email("Invalid email Format").required("Email is required"),
     otherNotes: yup.string(),
     totalAmount: yup.number().required("Total Amount is Required!"),
+    isDelivery: yup.boolean(),
+    status: yup.string()
 })
 
 export default function OrderFrom({order} : OrderFromProps) {
@@ -59,7 +62,7 @@ export default function OrderFrom({order} : OrderFromProps) {
                                 <OMSelect
                                     name="status"
                                     otherProps={{label:"Order Status"}}
-                                    options={Status}
+                                    options={statuses}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -77,7 +80,11 @@ export default function OrderFrom({order} : OrderFromProps) {
                             <Grid item xs={12}>
                                 <OMTextField
                                     name="otherNotes"
-                                    otherProps={{label:"Other Notes"}}
+                                    otherProps={{
+                                        label:"Other Notes",
+                                        multiline: true,
+                                        rows: 3
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -97,7 +104,7 @@ export default function OrderFrom({order} : OrderFromProps) {
                             </Grid>
                             <Grid item xs={12}>
                                 <OMCheckBox
-                                    name="delivery"
+                                    name="isDelivery"
                                     legend="Include Delivery"
                                     label="Include Delivery"
                                     otherProps={{label:"Delivery"}}
