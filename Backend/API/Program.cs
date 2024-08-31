@@ -9,6 +9,7 @@ using Core.interfaces;
 using Infrastructure.Services;
 using Core.Entities;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 var AllowSpecificOrigins = "_allowSpecificOrigins";
@@ -16,7 +17,7 @@ var AllowSpecificOrigins = "_allowSpecificOrigins";
 // Add services to the container.
 builder.Services.AddDbContextFactory<OMAContext>(options => 
 {
-    options.UseInMemoryDatabase("InMemoryDb");
+    options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
@@ -46,5 +47,18 @@ app.UseCors(AllowSpecificOrigins);
 app.MapGraphQL();
 
 app.UseGraphQLVoyager("/graphql-voyager", new VoyagerOptions {GraphQLEndPoint = "/graphql"});
+
+// Migrate Database
+try
+{
+    var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<OMAContext>();
+    context.Database.Migrate();
+}
+catch (System.Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred during migration");
+}
 
 app.Run();
