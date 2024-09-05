@@ -16,7 +16,6 @@ namespace Core.Models
         public decimal DepositAmount { get; set; }
         public bool IsDelivery { get; set; }
         public Status Status { get; set; }
-        public bool IsDeleted { get; set; }
         public string OtherNotes { get; set; }
     }
 }

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Customer, Order, useGetCustomersByIdQuery } from '../../../graphql/schema';
-import OMLoading from '../../../components/elements/OMLoading';
-import OMAlert from '../../../components/elements/OMAlert';
-import { Container, Grid } from '@mui/material';
-import CustomerForm from '../customersForm/CustomerForm';
-import OMHeader from '../../../components/elements/OMHeader';
-import OrderList from '../../orders/ordersDashboard/OrderList';
+import { Customer, Order, useGetCustomersByIdQuery } from '../../graphql/schema';
+import OMLoading from '../../components/elements/OMLoading';
+import OMAlert from '../../components/elements/OMAlert';
+import { Button, Container, Grid } from '@mui/material';
+import CustomerForm from './customersForm/CustomerForm';
+import OMHeader from '../../components/elements/OMHeader';
+import OrderList from '../orders/ordersDashboard/OrderList';
 
 export default function CustomerPage() {
     const params = useParams();
@@ -47,6 +47,11 @@ export default function CustomerPage() {
                 </Grid>
                 <Grid item xs={12}>
                     <OrderList orders={customerOrders} />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant='contained' fullWidth={true} href={`/customers/${customer.id}/neworder`}>
+                        Add New Order
+                    </Button>
                 </Grid>
             </Grid>
         </Container>

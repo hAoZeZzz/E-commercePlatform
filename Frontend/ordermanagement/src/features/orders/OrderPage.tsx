@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Customer, Order, useGetOrdersByIdQuery } from '../../../graphql/schema';
-import OMLoading from '../../../components/elements/OMLoading';
-import OMAlert from '../../../components/elements/OMAlert';
+import { Customer, Order, useGetOrdersByIdQuery } from '../../graphql/schema';
+import OMLoading from '../../components/elements/OMLoading';
+import OMAlert from '../../components/elements/OMAlert';
 import { Container, Grid } from '@mui/material';
-import OrderFrom from '../ordersForm/OrderForm';
-import OMHeader from '../../../components/elements/OMHeader';
+import OrderFrom from './ordersForm/OrderForm';
+import OMHeader from '../../components/elements/OMHeader';
 
 export default function OrderPage() {
     const params = useParams();

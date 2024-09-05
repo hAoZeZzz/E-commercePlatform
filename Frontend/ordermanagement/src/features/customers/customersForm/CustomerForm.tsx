@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Customer } from "../../../graphql/schema";
+import { Customer, CustomerModelInput, useAddOrUpdateCustomerMutation } from "../../../graphql/schema";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { Formik, Form } from "formik";
-import { Grid, Typography } from "@mui/material";
+import { Alert, Grid, Snackbar, Typography } from "@mui/material";
 import OMTextField from "../../../components/FormsUI/OMTextField";
 import OMSelect from "../../../components/FormsUI/OMSelect";
 import OMSubmitButton from "../../../components/FormsUI/OMSubmitButton";
 import countries from "../../../data/countries.json"
+import OMLoading from "../../../components/elements/OMLoading";
 
 interface CustomerFormProps {
     customer: Customer
@@ -36,19 +37,58 @@ export default function CustomerForm({customer}: CustomerFormProps) {
         lastName: customer.lastName || "",
         email: customer.email || "",
         contactNumber: customer.contactNumber || "",
-        AddressLine1: customer.address?.addressLine1 || "",
-        AddressLine2: customer.address?.addressLine2 || "",
+        addressLine1: customer.address?.addressLine1 || "",
+        addressLine2: customer.address?.addressLine2 || "",
         city: customer.address?.city || "",
         state: customer.address?.state || "",
         country: customer.address?.country || "",
     };
 
-    function addOrUpdateCustomerDetails(values: any) {
-        console.log(values);
+    const [addOrUpdateCustomer, {loading: addOrUpdateCustomerLoading, error: addOrUpdateCustomerError}] = useAddOrUpdateCustomerMutation();
+    const handleClose = (event: any) => {
+        if(event.reason === "clickaway") {
+            return;
+        }
+
+        setOpen(false);
+    }
+
+    async function addOrUpdateCustomerDetails(values: CustomerModelInput) {
+        const response = await addOrUpdateCustomer({
+            variables:{
+                customer: values
+            }
+        })
+
+        setOpen(true);
+
+        const customer = response.data?.addOrUpdateCustomer as Customer;
+        if (customer.id) {
+            navigate(`/customers/${customer.id}`);
+        }
+    }
+
+    if (addOrUpdateCustomerLoading) {
+        return (
+            <OMLoading />
+        );
+    }
+
+    if (addOrUpdateCustomerError) {
+        return (
+            <Snackbar open={true} autoHideDuration={6000}>
+                <Alert severity="error">Error Retreiving customer data</Alert>
+            </Snackbar>
+        )
     }
 
     return (
         <Container>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{width: "100%"}}>
+                    {!customer.id ? "Customer details successfully added" : "Customer details successfully updated"}
+                </Alert>
+            </Snackbar>
             <div>
                 <Formik
                     initialValues={INITIAL_FORM}
