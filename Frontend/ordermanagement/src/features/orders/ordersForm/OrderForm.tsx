@@ -74,6 +74,8 @@ export default function OrderForm({order} : OrderFormProps) {
     }
 
     if (addOrUpdateOrderError) {
+        console.log(addOrUpdateOrderError);
+        
         return (
             <Snackbar open={true} autoHideDuration={6000}>
                 <Alert severity="error">Error Retreiving order data</Alert>
