@@ -12,5 +12,6 @@ namespace Core.interfaces
         IQueryable<Customer> GetCustomersAndOrders();
         Task<Customer> AddOrUpdateCustomerAsync(CustomerModel customerModel);
         Task<bool> DeleteCustomerAsync(int customerId);
+        Task<Stats> GetCustomersAndOrderStats();
     }
 }

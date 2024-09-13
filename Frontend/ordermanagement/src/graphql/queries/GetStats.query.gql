@@ -1,0 +1,10 @@
+query GetStats {
+  stats {
+    totalCustomers
+    totalOrders
+    pendingOrders
+    completedOrders
+    shippedOrders
+    draftOrders
+  }
+}

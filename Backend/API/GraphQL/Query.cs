@@ -7,6 +7,8 @@ using HotChocolate.Data;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Core.interfaces;
+using System.Threading.Tasks;
+using Core.Models;
 
 namespace API.GraphQL
 {
@@ -23,5 +25,9 @@ namespace API.GraphQL
         {
             return orderService.GetOrders();
         }
+        public async Task<Stats> GetStats([Service] ICustomerService customerService)
+        {
+            return await customerService.GetCustomersAndOrderStats();
+        }    
     }
 }

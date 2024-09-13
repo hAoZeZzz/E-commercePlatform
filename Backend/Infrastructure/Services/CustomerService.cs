@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Enums;
 using Core.interfaces;
 using Core.Models;
 using Infrastructure.Data;
@@ -106,6 +107,28 @@ namespace Infrastructure.Services
             context.Orders.UpdateRange(orders);
 
             return await context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Stats> GetCustomersAndOrderStats()
+        {
+            var context = _contextFactory.CreateDbContext();
+
+            var totalCustomers = await context.Customers
+                                        .Where(c => !c.IsDeleted)
+                                        .CountAsync();
+            
+            var orders = await context.Orders
+                                .Where(o => !o.IsDeleted)
+                                .ToListAsync();
+            
+            return new Stats {
+                TotalCustomers = totalCustomers,
+                TotalOrders = orders.Count,
+                PendingOrders = orders.Count(o => o.Status == Status.PENDING),
+                DraftOrders = orders.Count(o => o.Status == Status.DRAFT),
+                CompletedOrders = orders.Count(o => o.Status == Status.COMPLETED),
+                ShippedOrders = orders.Count(o => o.Status == Status.SHIPPED)
+            };
         }
     }
 }
